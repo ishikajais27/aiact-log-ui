@@ -1,0 +1,336 @@
+/* Homepage only. Plain CSS + @apply; palette is burgundy / cream / gold. */
+.hp {
+  margin-bottom: -4rem;
+}
+.hp-band {
+  margin-inline: calc(50% - 50vw);
+}
+.hp-in {
+  @apply mx-auto w-full max-w-[1200px] px-5 md:px-8;
+}
+.hp h1,
+.hp h2,
+.hp h3 {
+  @apply font-serif font-normal tracking-tight;
+}
+.hp-eye {
+  @apply mb-8 text-[11px] font-semibold uppercase tracking-[0.2em] opacity-70;
+}
+.hp-btn {
+  @apply inline-flex items-center gap-2 border border-cream bg-cream px-5 py-3 text-[13px] font-medium text-burgundy transition-colors hover:bg-transparent hover:text-cream;
+}
+.hp-btn.dk {
+  @apply border-burgundy bg-burgundy text-cream hover:bg-transparent hover:text-burgundy;
+}
+.hp-btn.ol {
+  @apply bg-transparent text-cream hover:bg-cream hover:text-burgundy;
+}
+
+/* scroll reveals */
+.rv {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease var(--d, 0ms),
+    transform 0.8s ease var(--d, 0ms);
+}
+.rv.in {
+  opacity: 1;
+  transform: none;
+}
+.rvw .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+.rvw .w > span {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1)
+    calc(var(--i) * 45ms + var(--d, 0ms));
+}
+.rvw.in .w > span {
+  transform: none;
+}
+
+/* hero */
+.hp-hero {
+  @apply flex flex-col bg-burgundy text-cream;
+  min-height: calc(100svh - 4.5rem);
+}
+.hp-hero .mid {
+  @apply flex flex-1 flex-col justify-center py-16;
+}
+.hp-hero h1 {
+  @apply max-w-4xl text-5xl leading-[1.05] md:text-7xl;
+}
+.hp-hero .lead {
+  @apply mt-8 max-w-md text-lg text-cream/90;
+}
+.hp-hero .note {
+  @apply mt-3 max-w-md text-sm text-cream/70;
+}
+.hp-hero .acts {
+  @apply mt-8 flex flex-wrap gap-3;
+}
+.hp-tabs {
+  @apply grid gap-6 pb-8 sm:grid-cols-3;
+}
+.hp-tabs a {
+  @apply border-t border-cream/30 pt-4 text-[15px] font-medium text-cream/70 transition-colors hover:border-cream hover:text-cream;
+}
+
+/* light + dark sections */
+.hp-light {
+  @apply bg-cream py-20 text-burgundy md:py-32;
+}
+.hp-dark {
+  @apply bg-burgundy py-20 text-cream md:py-32;
+}
+.hp-state {
+  @apply max-w-5xl font-serif text-3xl leading-[1.18] md:text-5xl;
+}
+.hp-p {
+  @apply mt-8 max-w-xl text-base text-burgundy/80;
+}
+.hp-figs {
+  @apply mt-20 grid md:grid-cols-3;
+}
+.hp-fig {
+  @apply border-l border-burgundy/30 pb-2 pl-6;
+}
+.hp-fig .n {
+  @apply block font-serif text-6xl leading-none tracking-tight md:text-8xl;
+}
+.hp-fig .l {
+  @apply mt-8 block text-[11px] font-semibold uppercase tracking-[0.18em] text-burgundy/70;
+}
+.hp-meta {
+  @apply mt-14 grid gap-6 border-t border-burgundy/20 pt-8 sm:grid-cols-3;
+}
+.hp-meta .k {
+  @apply mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-burgundy/70;
+}
+.hp-sec-h {
+  @apply max-w-3xl text-4xl leading-[1.08] md:text-6xl;
+}
+.hp-cards {
+  @apply mt-16 grid gap-8 md:grid-cols-3;
+}
+.hp-cards.two {
+  @apply md:grid-cols-2;
+}
+.hp-card {
+  @apply flex min-h-[15rem] flex-col border-t border-cream/30 pt-6 transition-colors hover:border-gold;
+}
+.hp-card .num {
+  @apply text-sm text-gold;
+}
+.hp-card h3 {
+  @apply mt-10 text-3xl;
+}
+.hp-card p {
+  @apply mt-3 max-w-sm text-cream/70;
+}
+.hp-card .go {
+  @apply mt-auto pt-8 text-xl;
+}
+.hp-card.lt {
+  @apply border-burgundy/30 hover:border-burgundy;
+}
+.hp-card.lt p {
+  @apply text-burgundy/70;
+}
+.hp-card.lt .num {
+  @apply text-gold;
+}
+
+/* sticky image sequence */
+.hp-seq {
+  position: relative;
+  height: calc(var(--n) * 70svh + 100svh);
+  --sp: 0;
+}
+.hp-stick {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+.hp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  height: 100%;
+}
+.hp-steps {
+  @apply list-none p-0;
+}
+.hp-step {
+  @apply relative border-t border-burgundy/25 py-5;
+}
+.hp-step:last-child {
+  @apply border-b;
+}
+.hp-step h3 {
+  @apply text-2xl text-burgundy/45 transition-colors duration-500 md:text-3xl;
+}
+.hp-step.on h3 {
+  @apply text-burgundy;
+}
+.hp-step .body {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.6s ease,
+    opacity 0.6s ease,
+    visibility 0s 0.6s;
+}
+.hp-step.on .body {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    grid-template-rows 0.6s ease,
+    opacity 0.6s ease 0.15s,
+    visibility 0s;
+}
+.hp-step .body > div {
+  overflow: hidden;
+}
+.hp-step .body p {
+  @apply mt-4 max-w-md text-burgundy/80;
+}
+.hp-step .body a {
+  @apply mb-1 mt-5 inline-block border-b border-gold pb-0.5 text-sm font-medium;
+}
+.hp-step .bar {
+  @apply absolute -top-px left-0 h-px w-full origin-left bg-burgundy opacity-0;
+  transform: scaleX(0);
+}
+.hp-step.on .bar {
+  opacity: 1;
+  transform: scaleX(var(--sp));
+}
+.hp-frame {
+  @apply relative overflow-hidden bg-burgundy;
+  justify-self: end;
+  height: 74svh;
+  aspect-ratio: 4 / 5;
+  max-width: 100%;
+}
+.hp-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    opacity 0.7s ease,
+    transform 1.2s ease;
+}
+.hp-slide.on {
+  opacity: 1;
+  transform: none;
+}
+.hp-ph {
+  @apply flex flex-col items-center justify-center gap-4 border border-cream/30 text-cream;
+}
+.hp-ph .ser {
+  @apply font-serif text-8xl text-gold;
+}
+.hp-ph small {
+  @apply px-6 text-center text-xs text-cream/70;
+}
+.hp-cnt {
+  @apply absolute bottom-4 left-4 z-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-cream;
+}
+
+/* status rows + footer */
+.hp-rows .row {
+  @apply flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 border-t border-cream/25 py-5;
+}
+.hp-rows .row:last-child {
+  @apply border-b;
+}
+.hp-rows .row span:first-child {
+  @apply font-serif text-xl md:text-2xl;
+}
+.hp-rows .row span:last-child {
+  @apply text-sm text-cream/70;
+}
+.hp-foot {
+  @apply bg-burgundy pt-20 text-cream;
+}
+.hp-foot .top {
+  @apply flex flex-wrap items-center justify-between gap-6;
+}
+.hp-foot .top h2 {
+  @apply text-4xl md:text-5xl;
+}
+.hp-foot .cols {
+  @apply mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-3;
+}
+.hp-foot h4 {
+  @apply mb-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-cream/60;
+}
+.hp-foot .col a {
+  @apply block py-1 text-[15px] transition-colors hover:text-gold;
+}
+.hp-foot .col p {
+  @apply max-w-xs text-[15px] text-cream/80;
+}
+.hp-foot .bot {
+  @apply mt-20 flex flex-wrap items-end justify-between gap-4 border-t border-cream/25 py-8 text-sm text-cream/70;
+}
+.hp-foot .mark {
+  @apply block font-serif text-3xl text-cream;
+}
+
+@media (max-width: 767px) {
+  .hp-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    align-content: start;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+  }
+  .hp-frame {
+    order: -1;
+    width: 100%;
+    height: 40svh;
+    aspect-ratio: auto;
+    justify-self: stretch;
+  }
+  .hp-step:not(.on) {
+    display: none;
+  }
+  .hp-step:last-child {
+    border-bottom: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rv,
+  .rvw .w > span,
+  .hp-slide,
+  .hp-step .body,
+  .hp-step h3 {
+    transition: none !important;
+  }
+  .rv {
+    opacity: 1;
+    transform: none;
+  }
+  .rvw .w > span {
+    transform: none;
+  }
+  .hp-slide {
+    transform: none;
+  }
+}

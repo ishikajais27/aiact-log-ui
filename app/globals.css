@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Only burgundy / cream / gold exist (see tailwind.config.js). Opacity steps of those three are used for hairlines and secondary text. */
+
+@layer base {
+  html {
+    @apply bg-cream text-burgundy;
+  }
+  body {
+    @apply m-0 bg-cream font-sans text-[15px] leading-relaxed text-burgundy antialiased overflow-x-clip;
+  }
+  main {
+    @apply mx-auto max-w-[1200px] px-5 pb-16 md:px-8;
+  }
+  h1,
+  h2 {
+    @apply font-normal tracking-tighter;
+  }
+  h2 {
+    @apply mb-4 text-2xl;
+  }
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-gold;
+  }
+
+  table {
+    @apply w-full border-collapse text-[13px];
+  }
+  th,
+  td {
+    @apply border-b border-burgundy/15 px-3 py-2.5 text-left align-top;
+  }
+  th {
+    @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-burgundy/70;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply rounded-none border border-burgundy/30 bg-cream px-3 py-2 text-burgundy placeholder:text-burgundy/50 focus:border-burgundy focus:outline-none focus:ring-1 focus:ring-burgundy;
+  }
+  input[type='checkbox'],
+  input[type='radio'] {
+    @apply accent-burgundy;
+  }
+  pre {
+    @apply overflow-auto bg-burgundy p-4 text-xs text-cream;
+  }
+  code {
+    @apply text-[13px];
+  }
+  ul {
+    @apply list-disc pl-5;
+  }
+}
+
+@layer components {
+  /* header */
+  .site-nav {
+    @apply flex flex-wrap items-center gap-x-10 gap-y-3 border-b border-burgundy/15 bg-cream px-5 py-5 md:px-8;
+  }
+  .site-nav .brand {
+    @apply text-xl font-medium tracking-tighter;
+  }
+  .site-nav .links {
+    @apply flex flex-wrap gap-x-7 gap-y-2;
+  }
+  .site-nav .links a {
+    @apply border-b border-transparent pb-1 text-[12px] font-medium uppercase tracking-[0.14em] text-burgundy no-underline transition-colors hover:border-burgundy/40;
+  }
+  .site-nav .links a.on {
+    @apply border-gold;
+  }
+  .site-nav input {
+    @apply ml-auto w-48 text-[13px];
+  }
+
+  /* page head: burgundy band, full-bleed */
+  .band {
+    @apply mb-10 bg-burgundy text-cream;
+    margin-inline: calc(50% - 50vw);
+  }
+  .band-in {
+    @apply mx-auto max-w-[1200px] px-5 py-12 md:px-8 md:py-20;
+  }
+  .eyebrow {
+    @apply mb-6 flex items-baseline gap-4;
+  }
+  .eyebrow .num {
+    @apply text-5xl font-light tracking-tighter text-gold;
+  }
+  .eyebrow .lbl {
+    @apply text-[11px] font-semibold uppercase tracking-[0.2em] text-cream;
+  }
+  .band h1 {
+    @apply break-words text-4xl leading-[0.98] text-cream sm:text-5xl lg:text-7xl;
+  }
+  .band h1 em {
+    @apply italic;
+  }
+
+  /* content */
+  .card {
+    @apply mb-6 border border-burgundy/20 bg-cream p-5 md:p-6;
+  }
+  .muted {
+    @apply my-3 text-burgundy/70;
+  }
+  .err {
+    @apply my-3 border-l-2 border-gold pl-3 font-semibold;
+  }
+  .mono {
+    @apply break-all font-mono text-xs;
+  }
+  .scroll {
+    @apply overflow-x-auto;
+  }
+  tr.click {
+    @apply cursor-pointer;
+  }
+  tr.click:hover {
+    @apply bg-burgundy/5;
+  }
+  .banner {
+    @apply mb-6 border border-gold bg-gold/20 px-4 py-3;
+  }
+  .row {
+    @apply my-3 flex flex-wrap items-center gap-3;
+  }
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    @apply gap-6;
+  }
+  .kv b {
+    @apply block text-3xl font-normal tracking-tight;
+  }
+
+  .badge {
+    @apply inline-block border px-3 py-0.5 text-xs font-medium;
+  }
+  .badge.ok {
+    @apply border-burgundy bg-burgundy text-cream;
+  }
+  .badge.bad {
+    @apply border-gold bg-gold text-burgundy;
+  }
+
+  button {
+    @apply cursor-pointer border border-burgundy bg-burgundy px-5 py-2 text-[13px] font-medium text-cream transition-colors hover:bg-cream hover:text-burgundy disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-burgundy disabled:hover:text-cream;
+  }
+  button.sec {
+    @apply bg-cream text-burgundy hover:bg-burgundy hover:text-cream disabled:hover:bg-cream disabled:hover:text-burgundy;
+  }
+  button.danger {
+    @apply border-gold bg-gold text-burgundy hover:bg-burgundy hover:text-gold disabled:hover:bg-gold disabled:hover:text-burgundy;
+  }
+}

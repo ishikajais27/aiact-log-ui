@@ -1,0 +1,191 @@
+/* Traceability page only. Palette: burgundy / cream / gold. */
+.hp-band {
+  margin-inline: calc(50% - 50vw);
+}
+.tl {
+  @apply pb-8;
+  --cw: min(920px, 86vw);
+}
+.tl-top {
+  @apply pt-12 md:pt-20;
+}
+.tl-top h1 {
+  @apply font-serif text-6xl font-normal leading-none tracking-tight md:text-8xl;
+}
+.tl-top .lead {
+  @apply mt-8 max-w-3xl font-serif text-2xl md:text-3xl;
+}
+.tl-top .note {
+  @apply mt-4 max-w-2xl text-sm text-burgundy/70;
+}
+
+/* horizontal ID selector */
+.tl-tabs {
+  @apply mt-14 flex gap-6 overflow-x-auto border-b border-burgundy/25 md:mt-20;
+  scrollbar-width: none;
+}
+.tl-tabs::-webkit-scrollbar {
+  display: none;
+}
+.tl-tab {
+  @apply relative shrink-0 cursor-pointer border-0 bg-transparent p-0 pb-3 font-serif text-2xl font-normal text-burgundy/45 transition-colors duration-300 hover:bg-transparent hover:text-burgundy;
+}
+.tl-tab::after {
+  content: '';
+  @apply absolute -bottom-px left-0 h-0.5 w-full bg-gold;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+.tl-tab.on {
+  @apply text-burgundy;
+}
+.tl-tab.on::after {
+  transform: scaleX(1);
+}
+
+/* horizontal track of record cards (native scroll-snap: swipe, wheel, keys, arrows) */
+.tl-track {
+  @apply relative mt-10 flex gap-6 overflow-x-auto py-2;
+  padding-inline: max(1rem, calc((100vw - var(--cw)) / 2));
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.tl-track::-webkit-scrollbar {
+  display: none;
+}
+.tl-track:focus-visible {
+  @apply outline outline-2 outline-offset-2 outline-gold;
+}
+.tl-card {
+  @apply grid shrink-0 cursor-pointer border border-burgundy/25 bg-cream transition-all duration-500;
+  width: var(--cw);
+  min-height: 30rem;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  scroll-snap-align: center;
+  opacity: 0.45;
+  transform: scale(0.96);
+}
+.tl-card.on {
+  @apply cursor-default border-burgundy;
+  opacity: 1;
+  transform: none;
+}
+.tl-card:not(.on):hover {
+  opacity: 0.7;
+}
+
+.tl-side {
+  @apply flex flex-col bg-burgundy p-6 text-cream;
+}
+.tl-side .n {
+  @apply font-serif text-7xl leading-none tracking-tight;
+}
+.tl-side .p {
+  @apply mt-4 text-[13px] text-cream/75;
+}
+.tl-side .cls {
+  @apply mt-auto inline-flex items-center gap-2 pt-8 text-[11px] font-semibold uppercase tracking-[0.16em];
+}
+.cls::before {
+  content: '';
+  @apply h-2 w-2 rounded-full bg-cream;
+}
+.cls.interpretive::before {
+  @apply bg-gold;
+}
+
+.tl-main {
+  @apply flex flex-col p-8;
+}
+.tl-main h2 {
+  @apply m-0 font-serif text-3xl font-normal leading-tight tracking-tight;
+}
+.tl-main .q {
+  @apply mt-4 max-w-xl text-[15px] text-burgundy/75;
+}
+.tl-det {
+  @apply m-0 mt-auto grid gap-x-8 gap-y-5 border-t border-burgundy/20 pt-6;
+  grid-template-columns: 1.2fr 1.2fr 1fr;
+}
+.tl-main .q + .tl-det {
+  margin-top: auto;
+  padding-top: 1.5rem;
+}
+.tl-det dt {
+  @apply mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-burgundy/70;
+}
+.tl-det dd {
+  @apply m-0 font-mono text-[12.5px] leading-relaxed;
+  overflow-wrap: anywhere;
+}
+.tl-det dd span {
+  @apply block;
+}
+
+.tl-nav {
+  @apply mt-8 flex items-center justify-center gap-6 text-[13px] text-burgundy/70;
+}
+.tl-arrow {
+  @apply h-11 w-11 rounded-full border border-burgundy bg-burgundy p-0 text-lg font-normal text-cream hover:bg-transparent hover:text-burgundy disabled:opacity-30 disabled:hover:bg-burgundy disabled:hover:text-cream;
+}
+
+@media (max-width: 1023px) {
+  .tl-card {
+    grid-template-columns: 11rem minmax(0, 1fr);
+  }
+  .tl-side .n {
+    @apply text-6xl;
+  }
+  .tl-det {
+    grid-template-columns: 1fr 1fr;
+  }
+  .tl-det > :nth-child(2) {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+}
+@media (max-width: 639px) {
+  .tl-card {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .tl-side {
+    @apply flex-row flex-wrap items-baseline gap-x-4 gap-y-2 p-5;
+  }
+  .tl-side .n {
+    @apply text-5xl;
+  }
+  .tl-side .p {
+    @apply mt-0;
+  }
+  .tl-side .cls {
+    @apply mt-0 w-full pt-2;
+  }
+  .tl-main {
+    @apply p-5;
+  }
+  .tl-main h2 {
+    @apply text-2xl;
+  }
+  .tl-main .q + .tl-det {
+    margin-top: 1.5rem;
+  }
+  .tl-det {
+    grid-template-columns: 1fr;
+  }
+  .tl-det > :nth-child(2) {
+    order: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tl-card,
+  .tl-tab,
+  .tl-tab::after {
+    transition: none !important;
+  }
+  .tl-track {
+    scroll-behavior: auto;
+  }
+}
