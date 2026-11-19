@@ -2,6 +2,10 @@
 import { useEffect, useState } from 'react'
 import { api, useApi, useAction, fmt } from '../../lib/api'
 import { State, Table, Badge } from '../../components/ui'
+import Classification from '../../components/Classification'
+import Units from '../../components/Units'
+import Issues from '../../components/Issues'
+import Retrieval from '../../components/Retrieval'
 import './evaluation.css'
 
 const ms = (o) => (o ? `${fmt(o.mean)} ± ${fmt(o.sd)}` : '—')
@@ -59,10 +63,17 @@ export default function Evaluation() {
 
   const start = () =>
     run(async () => {
-      const x = await api('/evala/run', {
-        method: 'POST',
-        params: { backend: form.backend, runs: form.runs, model: form.model },
-      })
+      /* Send `model` only when it is a real Groq model id. Blank (or the
+         backend name typed by mistake) -> backend uses its default model. */
+      const model = form.model.trim()
+      const params = { backend: form.backend, runs: form.runs }
+      if (
+        form.backend !== 'heuristic' &&
+        model &&
+        model.toLowerCase() !== form.backend
+      )
+        params.model = model
+      const x = await api('/evala/run', { method: 'POST', params })
       setSt(x)
       return x
     })
@@ -118,8 +129,14 @@ export default function Evaluation() {
           </svg>
 
           <nav className="ev-index" aria-label="Sections">
-            <a href="#ev-run">
-              Run<span aria-hidden="true">+</span>
+            <a href="#ev-class">
+              Classification<span aria-hidden="true">+</span>
+            </a>
+            <a href="#ev-units">
+              Units<span aria-hidden="true">+</span>
+            </a>
+            <a href="#ev-issues">
+              Issue categories<span aria-hidden="true">+</span>
             </a>
             {d && (
               <>
@@ -164,9 +181,15 @@ export default function Evaluation() {
                       setForm({ ...form, backend: e.target.value })
                     }
                   >
-                    <option>heuristic</option>
-                    <option>anthropic</option>
-                    <option>ollama</option>
+                    <option value="heuristic">
+                      heuristic (rule-based, not an LLM)
+                    </option>
+                    <option value="groq" disabled={!info.data?.groq_configured}>
+                      groq
+                      {info.data?.groq_configured
+                        ? ''
+                        : ' (GROQ_API_KEY not set)'}
+                    </option>
                   </select>
                 </label>
                 <label className="ev-field">
@@ -184,7 +207,8 @@ export default function Evaluation() {
                 <label className="ev-field wide">
                   <span>Model</span>
                   <input
-                    placeholder="model (optional)"
+                    placeholder="optional Groq model id, e.g. openai/gpt-oss-120b (empty = server default)"
+                    autoComplete="off"
                     value={form.model}
                     onChange={(e) =>
                       setForm({ ...form, model: e.target.value })
@@ -426,24 +450,60 @@ export default function Evaluation() {
       </State>
 
       <Sec
+        id="ev-class"
+        a="Requirement"
+        b="classification (TG / ID / US)"
+        note="Paper §9. Reference labels are author-drafted; the run uses Groq."
+        alt
+      >
+        <Classification evalDate={d?.meta?.date} />
+      </Sec>
+
+      <Sec
+        id="ev-retrieval"
+        a="Retrieval"
+        b="metrics (retriever alone)"
+        note="Recall@k, MRR, nDCG from metrics.retrieval_metrics; no LLM involved."
+      >
+        <div className="ev-panel">
+          <Retrieval />
+        </div>
+      </Sec>
+
+      <Sec id="ev-units" a="Units:" b="paper 10 vs pilot 14" flip>
+        <Units />
+      </Sec>
+
+      <Sec id="ev-issues" a="Failure taxonomy" b="and new issue categories" alt>
+        <Issues />
+      </Sec>
+
+      <Sec
         id="ev-na"
         a="Not available"
         b="(not implemented in the backend)"
-        alt
+        flip
       >
         <div className="ev-panel">
           <ul>
             <li>
-              TG / ID / US requirement classification (the gold set has no such
-              labels)
+              Independent annotation of the gold set: pending. The TG/ID/US
+              reference labels are author-drafted too.
             </li>
-            <li>Retrieval metrics (Recall@k, MRR, nDCG) and F2</li>
             <li>
-              Human-rating results and Krippendorff α: the CLI{' '}
-              <code>scripts/score_ratings.py</code> computes them; they are not
-              exposed through the API
+              Human-rating results and Krippendorff α:{' '}
+              <code>GET /api/evala/ratings</code> computes them once{' '}
+              <code>rating_A.csv</code> (and <code>rating_B.csv</code>) are
+              filled in; this page does not display them yet.
             </li>
-            <li>Independent annotation of the gold set: pending</li>
+            <li>
+              F2 for trace links: computed by <code>metrics.prf</code> but not
+              written to <code>eval_a.json</code>.
+            </li>
+            <li>
+              The paper’s conditions RS, C0, C1, C1s, C2 and its K0–K3
+              contamination probes: the pilot runs B2, C3, C4 only.
+            </li>
           </ul>
         </div>
       </Sec>

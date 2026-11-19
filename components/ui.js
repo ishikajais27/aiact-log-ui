@@ -1,8 +1,6 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { getKey, setKey } from '../lib/api'
 
 const LINKS = [
   ['/', 'Home'],
@@ -10,15 +8,12 @@ const LINKS = [
   ['/evaluation', 'Evaluation'],
   ['/logs', 'Logs'],
   ['/lab', 'Lab'],
+  ['/ledger', 'Ledger'],
   ['/privacy', 'Privacy'],
 ]
 
 export function Nav() {
   const path = usePathname()
-  const [k, setK] = useState('')
-  useEffect(() => {
-    setK(getKey())
-  }, [])
   return (
     <nav className="site-nav">
       <b className="brand">Art. 12 Audit Log</b>
@@ -29,15 +24,6 @@ export function Nav() {
           </Link>
         ))}
       </div>
-      <input
-        type="password"
-        placeholder="X-API-Key (if set)"
-        value={k}
-        onChange={(e) => {
-          setK(e.target.value)
-          setKey(e.target.value)
-        }}
-      />
     </nav>
   )
 }

@@ -2,6 +2,7 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { api, useApi, useAction, fmt } from '../../lib/api'
 import { State, Table, Badge } from '../../components/ui'
+import Experiments from '../../components/Experiments'
 import './lab.css'
 
 const KINDS = [
@@ -240,7 +241,8 @@ export default function Lab() {
     ['lb-attacks', '001', 'Attack suite', demo],
     ['lb-bench', '002', 'Benchmark', demo],
     ['lb-live', '003', 'Live log', demo],
-    ['lb-na', '004', 'Not available', true],
+    ['lb-exp', '004', 'Experiments E7–E10', demo],
+    ['lb-na', '005', 'Not available', true],
   ].filter((x) => x[3])
 
   return (
@@ -604,6 +606,15 @@ export default function Lab() {
                 </ol>
               </div>
             </section>
+            {/* ---------- 004 Experiments E7-E10 ---------- */}
+            <section id="lb-exp" className="lb-sec">
+              <SecHead
+                n="004"
+                lines={['Experiments', 'E7 to E10']}
+                note="(temporary stores; the live log is not touched)"
+              />
+              <Experiments />
+            </section>
           </>
         )}
       </State>
@@ -612,13 +623,12 @@ export default function Lab() {
       <section id="lb-na" className="lb-sec">
         <Reveal className="lb-stripbox na">
           <div className="lb-tile">
-            <Pill n="004" />
+            <Pill n="005" />
             <Title className="sm" lines={['Not available']} />
           </div>
           <p className="lb-na-text">
-            Fork (E7), overload and logger-failure (E8, only in unit tests), key
-            compromise (E9) and clock skew (E10) experiments are not exposed by
-            the backend.
+            Not implemented: RFC 3161 timestamping, hybrid logical clocks and
+            multi-node aggregation (E7 forks a single node’s chain instead).
           </p>
         </Reveal>
       </section>
